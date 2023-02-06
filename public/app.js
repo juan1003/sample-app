@@ -16,8 +16,18 @@ const getUsers = async function () {
     if(users.length > 0 || users !== undefined) {
         users.map(user => {
             const li = document.createElement('li');
-            li.innerText = `${user.id} - ${user.name}`;
+            li.innerHTML = `${user.id} - ${user.name} <button class="btn-delete">X</button>`;
             usersList.appendChild(li);
+            const deleteBtn = li.querySelector('.btn-delete');
+            deleteBtn.addEventListener('click', async () => {
+                await fetch(`/users/${user.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                usersList.removeChild(li);
+            })
         })
     }
 }
@@ -36,7 +46,7 @@ nameForm.addEventListener('submit', async (e) => {
     });
     const confirmationComponent = `
         <h1>Thanks for submitting your name, ${name}</h1>
-        <button id="reset">Reset</button>
+        <button id="reset" class="btn">Reset</button>
     `;
     const addUserTab = document.querySelector('.tab-content[data-tab="2"]');
     addUserTab.innerHTML = confirmationComponent;

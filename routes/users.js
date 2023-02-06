@@ -17,4 +17,12 @@ router.post('/add', function(req, res) {
     res.json(users)
 })
 
+router.delete('/:id', function(req, res) {
+    const { id } = req.params;
+    const user = users.find(user => user.id === parseInt(id));
+    const index = users.indexOf(user);
+    users.splice(index, 1);
+})
+
+
 module.exports = router
