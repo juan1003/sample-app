@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan')('common');
 const path = require('path');
 const app = express();
-
+const port  = process.env.PORT || 8888;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'))
@@ -16,4 +16,4 @@ app.get("/", function(req, res) {
 
 app.use('/users', usersRoutes);
 
-app.listen(8888, () => console.log("Running on http://localhost:8888"))
+app.listen(port, () => console.log(`Running on http://localhost:${port}`))
